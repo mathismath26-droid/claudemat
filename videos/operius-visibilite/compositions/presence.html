@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+      #presence {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: Inter, sans-serif;
+        color: #f5f5f5;
+        --black: #050505;
+        --navy: #080d24;
+        --white: #f5f5f5;
+        --orange: #ff8a35;
+        --red: #ff4242;
+        --grey: #9296a5;
+      }
+      /* ---------- Scene 2/3 — presence, then reversal ---------- */
+      .s2-bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 60% 55% at 50% 42%, #0c1433 0%, var(--navy) 38%, var(--black) 78%);
+      }
+      .laptop {
+        position: absolute;
+        left: 450px;
+        top: 130px;
+        width: 1020px;
+        height: 620px;
+        transform-origin: 50% 85%;
+      }
+      .lid {
+        position: absolute;
+        left: 90px;
+        top: 0;
+        width: 840px;
+        height: 540px;
+        border-radius: 22px 22px 8px 8px;
+        background: linear-gradient(180deg, #1b1f33 0%, #10131f 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.18),
+          0 30px 80px rgba(0, 0, 0, 0.6);
+        padding: 18px 18px 22px;
+      }
+      .screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #02030a;
+      }
+      .screen-on {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        background: linear-gradient(180deg, #0f1631 0%, #0a0f24 100%);
+      }
+      .mock-nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 54px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 0 28px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .mock-dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 6px;
+        background: rgba(255, 138, 53, 0.85);
+      }
+      .mock-bar {
+        height: 10px;
+        border-radius: 5px;
+        background: rgba(146, 150, 165, 0.35);
+      }
+      .mock-hero {
+        position: absolute;
+        left: 28px;
+        right: 28px;
+        top: 84px;
+        height: 200px;
+        border-radius: 12px;
+        background: linear-gradient(120deg, rgba(146, 150, 165, 0.16), rgba(146, 150, 165, 0.05));
+        padding: 40px 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .mock-cards {
+        position: absolute;
+        left: 28px;
+        right: 28px;
+        top: 310px;
+        height: 150px;
+        display: flex;
+        gap: 18px;
+      }
+      .mock-card {
+        flex: 1;
+        border-radius: 12px;
+        background: rgba(146, 150, 165, 0.09);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .screen-glare {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(115deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 38%);
+      }
+      .base {
+        position: absolute;
+        left: 0;
+        top: 538px;
+        width: 1020px;
+        height: 34px;
+        clip-path: polygon(4% 0, 96% 0, 100% 62%, 99% 100%, 1% 100%, 0 62%);
+        background: linear-gradient(180deg, #2a2f45 0%, #161a2a 55%, #0b0d16 100%);
+      }
+      .notch {
+        position: absolute;
+        left: 440px;
+        top: 538px;
+        width: 140px;
+        height: 9px;
+        border-radius: 0 0 9px 9px;
+        background: #0d1020;
+      }
+      .laptop-shadow {
+        position: absolute;
+        left: 60px;
+        top: 560px;
+        width: 900px;
+        height: 60px;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 70%);
+      }
+      .rim {
+        position: absolute;
+        left: 90px;
+        top: 0;
+        width: 840px;
+        height: 540px;
+        border-radius: 22px 22px 8px 8px;
+        box-shadow: 0 0 0 1px rgba(255, 138, 53, 0.22), 0 -8px 40px rgba(255, 138, 53, 0.08);
+        opacity: 0;
+      }
+      .screen-glow {
+        position: absolute;
+        left: 40px;
+        top: -40px;
+        width: 940px;
+        height: 640px;
+        border-radius: 60px;
+        background: radial-gradient(ellipse at center, rgba(66, 110, 255, 0.22), rgba(66, 110, 255, 0) 65%);
+        opacity: 0;
+      }
+
+      .platform {
+        position: absolute;
+        opacity: 0;
+      }
+      .tile {
+        width: 156px;
+        height: 156px;
+        border-radius: 34px;
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tile img {
+        width: 86px;
+        height: 86px;
+        display: block;
+      }
+      .search-pill {
+        width: 340px;
+        height: 88px;
+        border-radius: 44px;
+        background: #ffffff;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        padding: 0 28px;
+        gap: 20px;
+      }
+      .search-pill img {
+        width: 42px;
+        height: 42px;
+        display: block;
+      }
+      .search-line {
+        flex: 1;
+        height: 6px;
+        border-radius: 3px;
+        background: #dfe1e5;
+      }
+      .search-mag {
+        width: 30px;
+        height: 30px;
+        display: block;
+      }
+
+      .claim {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 800px;
+        height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 34px;
+      }
+      .claim-text {
+        display: block;
+        font-weight: 700;
+        font-size: 76px;
+        letter-spacing: -0.025em;
+        line-height: 1.1;
+        white-space: nowrap;
+        color: var(--white);
+        opacity: 0;
+      }
+      .mark {
+        position: relative;
+        width: 96px;
+        height: 96px;
+        flex: 0 0 96px;
+      }
+      .mark svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        overflow: visible;
+      }
+      .verdict {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 610px;
+        display: flex;
+        justify-content: center;
+      }
+      .verdict-text {
+        display: block;
+        font-weight: 700;
+        font-size: 132px;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        white-space: nowrap;
+        color: var(--red);
+        opacity: 0;
+      }
+
+      /* ---------- Transition grid ---------- */
+      .tech-grid {
+        position: absolute;
+        inset: -200px;
+        background-image:
+          linear-gradient(rgba(146, 150, 165, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(146, 150, 165, 0.07) 1px, transparent 1px);
+        background-size: 80px 80px;
+        opacity: 0;
+      }
+      </style>
+      <div id="presence" data-composition-id="presence" data-width="1920" data-height="1080">
+        <div id="s2-bg" class="s2-bg"></div>
+
+        <div id="laptop" class="laptop">
+          <div id="screen-glow" class="screen-glow"></div>
+          <div id="laptop-shadow" class="laptop-shadow"></div>
+          <div class="lid">
+            <div class="screen">
+              <div id="screen-on" class="screen-on">
+                <div class="mock-nav">
+                  <div class="mock-dot"></div>
+                  <div class="mock-bar" style="width: 90px"></div>
+                  <div style="flex: 1"></div>
+                  <div class="mock-bar" style="width: 54px"></div>
+                  <div class="mock-bar" style="width: 54px"></div>
+                  <div class="mock-bar" style="width: 54px"></div>
+                </div>
+                <div class="mock-hero">
+                  <div class="mock-bar" style="width: 52%; height: 18px; background: rgba(245, 245, 245, 0.55)"></div>
+                  <div class="mock-bar" style="width: 38%; height: 18px; background: rgba(245, 245, 245, 0.4)"></div>
+                  <div class="mock-bar" style="width: 60%; margin-top: 8px"></div>
+                  <div class="mock-bar" style="width: 44%"></div>
+                </div>
+                <div class="mock-cards">
+                  <div class="mock-card"></div>
+                  <div class="mock-card"></div>
+                  <div class="mock-card"></div>
+                </div>
+              </div>
+              <div class="screen-glare"></div>
+            </div>
+          </div>
+          <div id="rim" class="rim"></div>
+          <div class="base"></div>
+          <div class="notch"></div>
+        </div>
+
+        <!-- Digital presence channels -->
+        <div id="pf-gbp" class="platform" style="left: 262px; top: 196px">
+          <div class="tile"><img src="assets/icons/google-business-profile.svg" alt="" /></div>
+        </div>
+        <div id="pf-ig" class="platform" style="left: 1502px; top: 196px">
+          <div class="tile"><img src="assets/icons/instagram.svg" alt="" /></div>
+        </div>
+        <div id="pf-search" class="platform" style="left: 120px; top: 488px">
+          <div class="search-pill">
+            <img src="assets/icons/google-g.svg" alt="" />
+            <div class="search-line"></div>
+            <svg class="search-mag" viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21" /></svg>
+          </div>
+        </div>
+        <div id="pf-web" class="platform" style="left: 1502px; top: 452px">
+          <div class="tile"><img src="assets/icons/website.svg" alt="" /></div>
+        </div>
+
+        <!-- « présence en ligne » + checkmark -->
+        <div class="claim">
+          <div id="claim-text" class="claim-text">présence en ligne</div>
+          <div id="mark" class="mark">
+            <svg viewBox="0 0 100 100">
+              <line id="mk-a" x1="24" y1="53" x2="42" y2="71" stroke="#FF8A35" stroke-width="9" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+              <line id="mk-b" x1="42" y1="71" x2="78" y2="31" stroke="#FF8A35" stroke-width="9" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="verdict">
+          <div id="verdict-text" class="verdict-text">être visible</div>
+        </div>
+
+        <div id="tech-grid" class="tech-grid"></div>
+      </div>
+      <script>
+document.fonts.ready.then(() => {
+        const tl = gsap.timeline({ paused: true });
+
+        // ---------- The laptop emerges from the dark ----------
+        tl.fromTo("#s2-bg", { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "sine.inOut" }, 0);
+        tl.fromTo(
+          "#laptop",
+          { opacity: 0, scale: 0.84, y: 70, filter: "brightness(0.35)" },
+          { opacity: 1, scale: 1, y: 0, filter: "brightness(1)", duration: 1.4, ease: "power3.out" },
+          0.1
+        );
+        tl.fromTo("#rim", { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "sine.out" }, 0.8);
+
+        // ---------- Presence ----------
+        tl.to("#screen-on", { opacity: 1, duration: 0.45, ease: "power1.out" }, 1.6);
+        tl.to("#screen-glow", { opacity: 1, duration: 0.6, ease: "sine.out" }, 1.6);
+
+        const pf = [
+          ["#pf-gbp", 2.2, 30, 20],
+          ["#pf-ig", 2.6, -30, 20],
+          ["#pf-search", 3.0, 30, -10],
+          ["#pf-web", 3.4, -30, -10],
+        ];
+        pf.forEach(([sel, t, dx, dy]) => {
+          tl.fromTo(sel, { opacity: 0, x: dx, y: dy, scale: 0.86 }, { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.55, ease: "power3.out" }, t);
+        });
+
+        tl.fromTo("#claim-text", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 4.1);
+        tl.to("#mk-a", { attr: { "stroke-dashoffset": 0 }, duration: 0.16, ease: "power1.in" }, 4.8);
+        tl.to("#mk-b", { attr: { "stroke-dashoffset": 0 }, duration: 0.3, ease: "power2.out" }, 4.96);
+        tl.fromTo("#mark", { scale: 0.9 }, { scale: 1, duration: 0.5, ease: "back.out(2)" }, 4.8);
+
+        // ---------- The reversal ----------
+        // Static layout, fonts loaded: the claim row (text + 34px gap + 96px mark) is centred
+        // horizontally in an 800-910px band, so the mark centre follows from the text's layout width.
+        const textW = document.getElementById("claim-text").offsetWidth || 640;
+        const rowW = textW + 34 + 96;
+        const markCx = 960 - rowW / 2 + textW + 34 + 48;
+        const markCy = 855;
+        const toTextMiddle = 960 - markCx;
+        const toCentre = 440 - markCy;
+
+        // The check slides into the middle of the words, erasing them as it passes.
+        tl.to("#mark", { x: toTextMiddle, duration: 0.5, ease: "power3.inOut" }, 6.8);
+        tl.fromTo("#claim-text", { clipPath: "inset(0% 0% 0% 0%)" }, { clipPath: "inset(0% 50% 0% 0%)", duration: 0.5, ease: "power3.inOut", immediateRender: false }, 6.8);
+        tl.to("#claim-text", { opacity: 0, filter: "blur(6px)", duration: 0.22, ease: "power1.in" }, 7.18);
+
+        // Channels and laptop recede.
+        ["#pf-gbp", "#pf-ig", "#pf-search", "#pf-web"].forEach((sel, i) => {
+          tl.to(sel, { opacity: 0, scale: 0.82, filter: "blur(6px)", duration: 0.6, ease: "power2.in" }, 6.85 + i * 0.04);
+        });
+        tl.to("#laptop", { opacity: 0, scale: 0.9, filter: "brightness(0.3) blur(4px)", duration: 0.75, ease: "power2.in" }, 6.9);
+        tl.to("#s2-bg", { opacity: 0.55, duration: 0.7, ease: "sine.inOut" }, 6.9);
+
+        // The check settles alone at centre.
+        tl.to("#mark", { y: toCentre, scale: 2.1, duration: 0.45, ease: "power3.out" }, 7.3);
+
+        // Check -> red cross, locked to the buzzer (root 14.1 s = local 7.9 s).
+        tl.to("#mk-a", { attr: { x1: 26, y1: 26, x2: 74, y2: 74 }, duration: 0.13, ease: "power2.out" }, 7.9);
+        tl.to("#mk-b", { attr: { x1: 74, y1: 26, x2: 26, y2: 74 }, duration: 0.13, ease: "power2.out" }, 7.9);
+        tl.to(["#mk-a", "#mk-b"], { attr: { stroke: "#FF4242" }, duration: 0.08, ease: "none" }, 7.9);
+        tl.to("#mark", { keyframes: [{ x: toTextMiddle - 10, duration: 0.05 }, { x: toTextMiddle + 9, duration: 0.05 }, { x: toTextMiddle - 5, duration: 0.05 }, { x: toTextMiddle, duration: 0.06 }] }, 7.98);
+
+        tl.fromTo("#verdict-text", { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.24, ease: "power4.out" }, 8.2);
+
+        // ---------- Into the technical world ----------
+        tl.to(["#mark", "#verdict-text"], { opacity: 0, filter: "blur(10px)", duration: 0.7, ease: "power2.in" }, 11.5);
+        tl.to("#verdict-text", { scale: 0.86, duration: 0.7, ease: "power2.in" }, 11.5);
+        tl.to("#mark", { scale: 1.7, duration: 0.7, ease: "power2.in" }, 11.5);
+        tl.fromTo("#tech-grid", { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: 0.9, ease: "power2.out" }, 11.6);
+
+        window.__timelines["presence"] = tl;
+      });
+      </script>
+    </template>
+  </body>
+</html>
