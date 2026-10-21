@@ -1,0 +1,42 @@
+[
+  {
+    "id": "intro",
+    "start": 0,
+    "dur": 6.7
+  },
+  {
+    "id": "sites",
+    "start": 6,
+    "dur": 8.5
+  },
+  {
+    "id": "seo",
+    "start": 13.8,
+    "dur": 7.7
+  },
+  {
+    "id": "gmaps",
+    "start": 20.8,
+    "dur": 7.7
+  },
+  {
+    "id": "contenus",
+    "start": 27.8,
+    "dur": 7.7
+  },
+  {
+    "id": "identite",
+    "start": 34.8,
+    "dur": 7.7
+  },
+  {
+    "id": "reseaux",
+    "start": 41.8,
+    "dur": 7.7
+  },
+  {
+    "id": "finale",
+    "start": 48.8,
+    "dur": 9.2
+  }
+]
