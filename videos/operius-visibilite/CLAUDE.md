@@ -107,3 +107,12 @@ Fix all errors before presenting the result. Warnings should be reviewed before 
 4. A video with sound keeps it on the `<video>` (`data-has-audio="true"`, no `muted`). Use a separate `<audio>` for music, voiceover, replacement audio, J/L cuts, or audio detached in Studio. Silent footage and b-roll: `muted`.
 5. Sub-compositions use `data-composition-src="compositions/file.html"` to reference other HTML files
 6. Only deterministic logic — no `Date.now()`, no `Math.random()`, no network fetches
+
+## This project: operius-visibilite
+
+Intent, timings and asset provenance live in `BRIEF.md`; read it before editing.
+
+- **Architecture:** `index.html` is only a sequencer. It mounts three sub-compositions (`compositions/intro.html` 0–6.3 s, `presence.html` 6.2–18.7 s, `developer.html` 18.6–24 s; scenes overlap by ~0.1 s) and declares every sound effect as an `<audio>` on tracks 10+. Each scene owns its GSAP timeline, registered in `window.__timelines` under its `data-composition-id`. A timing change usually means editing both `index.html` and the scene file.
+- **Audio is generated, not sourced:** `python3 -I tools/make_sfx.py` (from the project root; needs numpy) rewrites `assets/sfx/*.wav` deterministically (seeded) and `assets/sfx/keys.json`, the keystroke times the developer scene's hand animation is synced to. After changing SFX timing, rerun it and re-check the sync.
+- **Assets:** the Operius logo (`assets/brand/operius-logo.png`) must stay byte-identical to the supplied original and be shown without effects or cropping. GSAP is vendored in `assets/vendor/`.
+- Language is French (`lang="fr"`); canvas is 1920×1080.
