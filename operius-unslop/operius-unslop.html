@@ -1,0 +1,185 @@
+<!--
+  OPERIUS × UNSLOP : couche de finition (mode polish)
+  Basé sur le skill unslop de Damir Sokolovsky (@heydamir), CC BY 4.0.
+
+  MODE D'EMPLOI
+  1. Gardez tout votre code actuel.
+  2. Collez ce bloc <style> juste APRÈS la dernière balise de fermeture de style de votre code (dans le même widget HTML).
+  3. Faites les 2 remplacements de texte indiqués en bas de ce commentaire.
+  Pour revenir en arrière : supprimez ce bloc <style>.
+
+  DIRECTION
+  - Produit : sites sur mesure et référencement local pour professionnels (Dijon, Lyon, Lille).
+  - Caractère : direct, artisanal, rassurant.
+  - Monde : le carnet de notes à spirale, l'atelier, les mascottes.
+  - Moments riches : le cahier des besoins, la vidéo du héros, les mascottes. Le reste reste calme.
+  - Signature : le cahier à lignes (marge et spirale), gardé tel quel.
+
+  REMPLACEMENTS DE TEXTE (titres sans point final)
+  1. <span class="grad">dès le premier clic.</span>      ->  <span class="grad">dès le premier clic</span>
+  2. <span class="grad">vos prospects vous découvrent.</span>  ->  <span class="grad">vos prospects vous découvrent</span>
+-->
+<style id="op-unslop">
+/* ========== 0. Jetons : un seul accent, plus de dégradé de teinte à teinte ========== */
+#operius{
+  --violet:var(--accent);
+  --cyan:var(--accent-txt);
+  --bleu:var(--accent);
+  --degrade:linear-gradient(var(--accent),var(--accent));
+  --degrade-clair:linear-gradient(#AEB8FF,#AEB8FF);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ombre-s:0 1px 2px rgba(14,16,48,.06);
+  --ombre-m:0 8px 24px rgba(14,16,48,.06);
+}
+
+/* ========== 1. Couleur : fonds plats, plus de halos ni de textes en dégradé ========== */
+#operius :is(.services,.temoin,.qui,.faq-sec,.actus,.galerie,.tarifs,.fond-accent,.reals){background-image:none}
+#operius .reals::before,
+#operius .fond-accent::before,
+#operius .methode::after,
+#operius .pied-banniere::before,
+#operius .qui-carte::after,
+#operius .pied-marque::before,
+#operius .pied-marque::after{display:none}
+#operius .faq-sec{background:var(--fond)}
+
+#operius .grad{background:none!important;-webkit-background-clip:border-box;background-clip:border-box;color:var(--accent);-webkit-text-fill-color:currentColor;padding-bottom:0}
+#operius h1 .grad,#operius .reals .grad,#operius .fond-accent .grad{color:var(--accent-txt)}
+
+#operius .vis-cadre{background:#fff;border:1px solid var(--ligne);box-shadow:var(--ombre-m)}
+#operius .vis-cadre img{background:var(--fond)}
+#operius .qc-rond{background:var(--accent);box-shadow:0 0 0 14px #fff,0 0 0 15px var(--ligne)}
+#operius .cahier-couv{background:var(--accent-f)}
+#operius .lecteur-attente{background:var(--encre)}
+#operius .ck-visuel{background-image:none}
+#operius .etape::after{background:var(--encre)}
+#operius .pied::before{height:1px;background:var(--ligne)}
+#operius .pied-marque{background:var(--fond);border:1px solid var(--ligne)}
+#operius .cahier::before{background:rgba(61,74,232,.3)}
+
+/* verre dépoli retiré */
+#operius .hero-bas{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(11,12,28,.6)}
+#operius .projet-badge,#operius .dp-badge{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.94);border-radius:8px}
+
+/* un seul accent dans le cahier : onglets et cases */
+#operius .onglet,#operius .item{--c:var(--accent)!important}
+#operius .onglet{border-top:1px solid var(--ligne);padding:10px 13px}
+#operius .onglet[aria-selected="true"]{border-top:3px solid var(--accent);padding-top:8px}
+#operius .item.cyan input:checked + .case path{stroke:#fff}
+
+/* packs : une seule teinte, le pack sélectionné porte l'accent */
+#operius .pack,#operius .pack-visibilite,#operius .pack-signature{--pc:var(--accent);--pg:var(--accent)}
+#operius .pack{border:1px solid var(--ligne);border-radius:16px;box-shadow:var(--ombre-s)}
+#operius .pack-signature{background:#fff;border-color:var(--accent)}
+#operius .pack:hover{transform:none;box-shadow:var(--ombre-m)}
+#operius .pack[aria-pressed="true"]{border-color:transparent;box-shadow:none}
+#operius .pack-cta{border-radius:10px}
+
+/* FAQ : seule la question ouverte se démarque */
+#operius .faq details:not([open]){background:#fff;border-color:var(--ligne)}
+#operius .faq details:not([open]):hover{background:#fff;border-color:rgba(61,74,232,.4)}
+#operius .faq details:not([open]) summary h3{color:var(--encre)}
+#operius .faq details:not([open]) .faq-plus{border-color:var(--accent)}
+#operius .faq details:not([open]) .faq-plus::before,
+#operius .faq details:not([open]) .faq-plus::after{background:var(--accent)}
+
+/* blocs des services et témoignage : filet discret au lieu du cadre accent */
+#operius .bloc{padding:20px;border:1px solid var(--ligne);background:#fff;box-shadow:var(--ombre-s)}
+#operius .bloc:hover{transform:none;background:#fff;border-color:rgba(61,74,232,.4);box-shadow:var(--ombre-s)}
+#operius .bloc-ico{box-shadow:none;border:1px solid var(--ligne)}
+#operius .blocs{gap:16px}
+#operius .temoin-carte{border:1px solid var(--ligne);box-shadow:var(--ombre-m)}
+
+/* ombres teintées retirées */
+#operius .nav-in{box-shadow:var(--ombre-s)}
+#operius .nav.ombre .nav-in{box-shadow:var(--ombre-m)}
+#operius .cahier{box-shadow:var(--ombre-m)}
+#operius .btn-acc,#operius .btn-sombre{box-shadow:none}
+#operius .btn-blanc:hover{box-shadow:none}
+#operius .pano-fl.suiv,#operius .fab-tel{box-shadow:none}
+#operius .etape.holo{box-shadow:0 24px 60px rgba(10,12,60,.22)}
+
+/* texte secondaire lisible */
+#operius .fc em,#operius .dt-pied,#operius .pied-mention,#operius .pano-tab i{color:var(--gris)}
+
+/* anneau de focus visible sur chaque fond */
+#operius :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#operius :is(.hero,.reals,.fond-accent) :focus-visible{outline-color:#fff}
+
+/* ========== 2. Typographie : poids 500, plus de capitales espacées ========== */
+#operius :is(.titre,h1,.slide h3,.projet h3,.dp-nom,.qc-badge b,.qc-titre,.pack-nom,.pack-prix,.total-ligne.fort b,.etape h3,.etape-masc>b,.faq-aide strong,.ck-txt h2,.temoin-titre,.autres-titre,.oc-fin p,.dt-titre,.fw strong,.ok,.pied-col b,.etape-pill,.lecteur-attente b){font-weight:500}
+#operius .item input:checked ~ .item-nom{font-weight:600}
+#operius .item-prix,#operius .recap-cat,#operius .recap-ligne span:last-child{font-weight:600}
+
+#operius .h1-cle{font-size:clamp(15px,1.4vw,18px);font-weight:500;line-height:1.4;letter-spacing:0;text-transform:none;color:rgba(255,255,255,.82);margin-bottom:16px}
+#operius .fw-tag{font-size:12px;font-weight:600;letter-spacing:.01em;text-transform:none}
+#operius .qc-sur{font-size:14px;font-weight:500;letter-spacing:.01em;text-transform:none}
+#operius .qui-outils small{font-size:13px;letter-spacing:.01em;text-transform:none}
+#operius .btn-estim{letter-spacing:0;text-transform:none}
+
+/* ========== 3. Détails : rayons par taille, plus de gélules partout ========== */
+#operius .btn{padding:12px 24px;border-radius:10px;transition:background-color .15s var(--ease),color .15s var(--ease),border-color .15s var(--ease),transform .15s var(--ease)}
+#operius .btn:hover{transform:none}
+#operius .btn:active{transform:scale(.98)}
+#operius .btn-lien{padding:6px 0;border-radius:0}
+#operius .btn-son{padding:8px 12px;border-radius:8px}
+#operius .annonce b{padding:0;border-radius:0;background:none;color:var(--accent-txt);font-weight:600}
+#operius :is(.pastille,.qui-outils span,.dt-tag,.ck-toujours,.pack-badge,.etape-paye span){border-radius:6px}
+#operius .etape-pill{border-radius:10px}
+#operius .etape-pill i{border-radius:8px}
+#operius .dt-valide{border-radius:12px}
+#operius .ok{border-radius:16px}
+
+/* ========== 4. Mouvement : plus de boucles, de reflets ni de rebonds ========== */
+#operius .btn-brille::after,
+#operius .pack.brille::after,
+#operius .etape::before{display:none!important}
+#operius .duo.on .dp-photo img,
+#operius .duo.on .dt-valide i,
+#operius .duo.on .dt-valide .i,
+#operius .duo.on .dt-valide span,
+#operius .an-tel,
+#operius .an-tel .onde,
+#operius .an-ecran .l1,
+#operius .an-ecran .l2,
+#operius .an-check path,
+#operius .fab.pop .fab-tel{animation:none!important}
+#operius .an-ecran .l1,#operius .an-ecran .l2,#operius .an-check path{stroke-dasharray:none;stroke-dashoffset:0;opacity:1}
+#operius .dt-valide span{background:none;color:#0F7A43;-webkit-text-fill-color:currentColor}
+
+#operius .projet:hover,#operius .etape:hover{transform:none}
+#operius .etape:hover .etape-masc img{transform:none}
+#operius .qc-badge{transition:none}
+#operius .qc-badge:hover{transform:none}
+#operius .pano-fl:not(:disabled):hover,#operius .oc-fl:hover{transform:none}
+#operius .avis:hover .etoiles svg{transform:none}
+#operius .fab-tel{transition:background-color .2s var(--ease),color .2s var(--ease)}
+#operius .fab-tel:hover{width:56px}
+
+/* une seule entrée au chargement : fondu et montée courte, décalage léger */
+#operius.anim .entree{transform:translateY(8px)}
+#operius.anim.joue .entree{transition:opacity .4s var(--ease) calc(var(--i) * 60ms),transform .5s var(--ease) calc(var(--i) * 60ms)}
+#operius.rv-on .rv{transform:translateY(12px)}
+#operius.rv-on .rv.vu{transition:opacity .4s var(--ease) calc(var(--i,0) * 60ms),transform .5s var(--ease) calc(var(--i,0) * 60ms)}
+
+/* ========== 5. Espacement (sur la grille de 4 px) ========== */
+@media (min-width:761px){
+  #operius .nav .btn{padding:8px 16px;border-radius:10px}
+}
+@media (min-width:901px){
+  #operius .fc{padding:12px 16px 12px 12px}
+}
+#operius .projet-corps{padding:24px}
+@media (max-width:760px){
+  #operius .projet-corps{padding:16px}
+}
+@media (max-width:900px){
+  #operius .bloc{padding:16px}
+}
+
+/* ========== Optionnel : masquer le lecteur « bientôt en vidéo » tant que la vidéo n'existe pas ==========
+#operius .qui-intro .pastille,
+#operius .qui-intro > p:first-of-type,
+#operius .lecteur{display:none}
+*/
+</style>
